@@ -110,7 +110,7 @@ async function main () {
             item.save()    
             res.redirect("/")
         } else {
-            // find the list
+            // find the list and push the new item
             const filter = {name: listName}
             const query = await List.findOne(filter).exec()
             const itemList = query.items
@@ -124,8 +124,26 @@ async function main () {
     
     app.post("/delete", async function(req, res){
         const checkedItemId = req.body.checkbox
-        await Item.findByIdAndRemove(checkedItemId)
-        res.redirect("/")
+        const listName = req.body.listName
+        const itemName = req.body.itemName
+
+        if (listName === "Today") {
+            await Item.findByIdAndRemove(checkedItemId)
+            res.redirect("/")
+        } else {
+            // Maybe there is a better way but for now it works
+            const query = await List.findOne({name: listName}).exec()
+
+            for (let i = 0; i < query.items.length; i++) {
+                if(query.items[i].name === itemName) {
+                    query.items.splice(i, 1)
+                }
+            }
+
+            const response = await List.updateOne({name: listName}, {items: query.items})
+            console.log(response)
+            res.redirect("/" + listName)      
+        }  
     })
     
     // APP LISTEN
