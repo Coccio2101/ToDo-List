@@ -64,12 +64,13 @@ async function main () {
     let records = [item1, item2, item3]
     databaseInsert(records)
 
-    // read from the database
-    filter = {}
-    const items = await databaseRead(filter)
-
-    app.get("/", (req, res) => {
+    app.get("/", async function(req, res) {
         /* const day = date.getDate() */
+        
+        // read from the database
+        filter = {}
+        const items = await databaseRead(filter)
+
         res.render("list", {listTipe: "Today", newListItem: items})
     })
     
