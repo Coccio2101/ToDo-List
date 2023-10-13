@@ -2,6 +2,7 @@ const express = require("express")
 const bodyParser = require("body-parser")
 /* const date = require(__dirname + "/date.js") */
 const mongoose = require("mongoose")
+const _ = require("lodash")
 
 const app = express()
 
@@ -73,7 +74,7 @@ async function main () {
     })
 
     app.get("/:customListTitle", async function(req, res){
-        const customListTitle = req.params.customListTitle
+        const customListTitle = _.capitalize(req.params.customListTitle)
 
         const list = new List({
             name: customListTitle,
