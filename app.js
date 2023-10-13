@@ -96,17 +96,30 @@ async function main () {
     })
     
     // POST REQUESTES
-    app.post("/", (req, res) => {
+    app.post("/", async function(req, res){
         
         const itemName = req.body.newItem
+        const listName = req.body.list
 
         // Create a new item based on the item model
         const item = new Item({
             name: itemName
         })
 
-        item.save()    
-        res.redirect("/")
+        if (listName === "Today") {
+            item.save()    
+            res.redirect("/")
+        } else {
+            // find the list
+            const filter = {name: listName}
+            const query = await List.findOne(filter).exec()
+            const itemList = query.items
+            itemList.push(item)
+
+            // update the record with the new item
+            await List.updateOne(filter, {items: itemList})
+            res.redirect("/" + listName)
+        }
     })
     
     app.post("/delete", async function(req, res){
