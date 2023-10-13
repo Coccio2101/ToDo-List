@@ -35,32 +35,16 @@ const item3 = new Item({
     name: "<-- Hit this to delete an item"
 })
 
-async function databaseConnection() {
-    await mongoose.connect(url)
-    console.log("Connection with database established...")
-}
-
 async function databaseInsert(records) {
     await Item.create(records)
     console.log("item has been inserted!")
 }
 
-async function databaseRead(filter) {
-    const query = await Item.find(filter).exec()
-
-    const queryList = []
-
-    query.forEach((record) => {
-        queryList.push(record)
-    })
-
-    return queryList
-}
-
 async function main () {
     // We need to wait the connection from the database before
     // doing operation with it
-    await databaseConnection()
+    await mongoose.connect(url)
+    console.log("Connection with database established...")
 
     // GET REQUESTES
     app.get("/", async function(req, res) {
@@ -68,7 +52,11 @@ async function main () {
 
         // read from the database
         filter = {}
-        const items = await databaseRead(filter)
+        const query = await Item.find(filter).exec()
+        const items = []
+        query.forEach((record) => {
+            items.push(record)
+        })
 
         if(items.length === 0) {
             await databaseInsert([item1, item2, item3])
@@ -76,10 +64,6 @@ async function main () {
         } else {
             res.render("list", {listTipe: "Today", newListItem: items})
         }
-    })
-    
-    app.get("/work", (req, res) => {
-        res.render("list", {listTipe: "Work", newListItem: itemWork})
     })
 
     app.get("/about", (req, res) => {
