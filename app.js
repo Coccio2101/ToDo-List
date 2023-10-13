@@ -61,17 +61,20 @@ async function main () {
     // We need to wait the connection from the database before
     // doing operation with it
     await databaseConnection()
-    let records = [item1, item2, item3]
-    databaseInsert(records)
 
     app.get("/", async function(req, res) {
         /* const day = date.getDate() */
-        
+
         // read from the database
         filter = {}
         const items = await databaseRead(filter)
 
-        res.render("list", {listTipe: "Today", newListItem: items})
+        if(items.length === 0) {
+            await databaseInsert([item1, item2, item3])
+            res.redirect("/")
+        } else {
+            res.render("list", {listTipe: "Today", newListItem: items})
+        }
     })
     
     app.get("/work", (req, res) => {
