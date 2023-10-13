@@ -45,15 +45,31 @@ async function databaseInsert(records) {
     console.log("item has been inserted!")
 }
 
+async function databaseRead(filter) {
+    const query = await Item.find(filter).exec()
+
+    const queryList = []
+
+    query.forEach((record) => {
+        queryList.push(record)
+    })
+
+    return queryList
+}
+
 async function main () {
     // We need to wait the connection from the database before
     // doing operation with it
     await databaseConnection()
     let records = [item1, item2, item3]
-    await databaseInsert(records)
+    databaseInsert(records)
+
+    // read from the database
+    filter = {}
+    const queryList = await databaseRead(filter)
 
     app.get("/", (req, res) => {
-        /* const day = date.getDate() */    
+        /* const day = date.getDate() */
         res.render("list", {listTipe: "Today", newListItem: items})
     })
     
