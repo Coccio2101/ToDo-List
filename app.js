@@ -21,8 +21,14 @@ const itemSchema = new mongoose.Schema({
     name: String
 })
 
+const listSchema = new mongoose.Schema({
+    name: String,
+    items: [itemSchema]
+})
+
 // create a mongoose model
 const Item = mongoose.model("Item", itemSchema)
+const List = mongoose.model("List", listSchema)
 
 // create some records
 const item1 = new Item({
@@ -63,6 +69,25 @@ async function main () {
             res.redirect("/")
         } else {
             res.render("list", {listTipe: "Today", newListItem: items})
+        }
+    })
+
+    app.get("/:customListTitle", async function(req, res){
+        const customListTitle = req.params.customListTitle
+
+        const list = new List({
+            name: customListTitle,
+            items: [item1, item2, item3]
+        })
+
+        const query = await List.findOne({name: customListTitle}).exec()
+        if(query) {
+            // Show an existing list
+            res.render("list", {listTipe: customListTitle, newListItem: query.items})
+        } else {
+            // Create a new list
+            list.save()
+            res.redirect("/" + customListTitle)
         }
     })
 
