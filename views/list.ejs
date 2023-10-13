@@ -6,13 +6,13 @@
     
     <div class="box">
         <!-- items -->
-        <% for(let i = 0; i < newListItem.length; i++){ %>
+        <% newListItem.forEach((record) => { %>
             <div class="item">
                 <input type="checkbox" />
-                <p><%= newListItem[i] %></p>
+                <p><%= record.name %></p>
             </div>
-        <% } %>
-
+        <% }) %>
+        
         <!-- Form -->
         <form class="item" action="/" method="post">
             <input type="text" name="newItem" autofocus placeholder="New Item" autocomplete="off"/>

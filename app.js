@@ -66,7 +66,7 @@ async function main () {
 
     // read from the database
     filter = {}
-    const queryList = await databaseRead(filter)
+    const items = await databaseRead(filter)
 
     app.get("/", (req, res) => {
         /* const day = date.getDate() */
