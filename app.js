@@ -83,15 +83,15 @@ async function main () {
     
     app.post("/", (req, res) => {
         
-        const item = req.body.newItem
-    
-        if (req.body.list === "Work") {
-            itemWork.push(item)
-            res.redirect("/work")
-        } else {
-            items.push(item)
-            res.redirect(`/`)
-        }
+        const itemName = req.body.newItem
+
+        // Create a new item based on the item model
+        const item = new Item({
+            name: itemName
+        })
+
+        item.save()    
+        res.redirect("/")
     })
     
     app.get("/about", (req, res) => {
