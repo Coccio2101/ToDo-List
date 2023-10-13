@@ -35,41 +35,52 @@ const item3 = new Item({
     name: "<-- Hit this to delete an item"
 })
 
-async function databaseOperations() {
+async function databaseConnection() {
     await mongoose.connect(url)
     console.log("Connection with database established...")
-    await Item.create([item1, item2, item3])
+}
+
+async function databaseInsert(records) {
+    await Item.create(records)
     console.log("item has been inserted!")
 }
 
-databaseOperations()
+async function main () {
+    // We need to wait the connection from the database before
+    // doing operation with it
+    await databaseConnection()
+    let records = [item1, item2, item3]
+    await databaseInsert(records)
 
-app.get("/", (req, res) => {
-    /* const day = date.getDate() */    
-    res.render("list", {listTipe: "Today", newListItem: items})
-})
-
-app.get("/work", (req, res) => {
-    res.render("list", {listTipe: "Work", newListItem: itemWork})
-})
-
-app.post("/", (req, res) => {
+    app.get("/", (req, res) => {
+        /* const day = date.getDate() */    
+        res.render("list", {listTipe: "Today", newListItem: items})
+    })
     
-    const item = req.body.newItem
+    app.get("/work", (req, res) => {
+        res.render("list", {listTipe: "Work", newListItem: itemWork})
+    })
+    
+    app.post("/", (req, res) => {
+        
+        const item = req.body.newItem
+    
+        if (req.body.list === "Work") {
+            itemWork.push(item)
+            res.redirect("/work")
+        } else {
+            items.push(item)
+            res.redirect(`/`)
+        }
+    })
+    
+    app.get("/about", (req, res) => {
+        res.render("about")
+    })
+    
+    app.listen(3000, () => {
+        console.log("Server is listening on port 3000")
+    })
+}
 
-    if (req.body.list === "Work") {
-        itemWork.push(item)
-        res.redirect("/work")
-    } else {
-        items.push(item)
-        res.redirect(`/`)
-    }
-})
-
-app.get("/about", (req, res) => {
-    res.render("about")
-})
-
-app.listen(3000, () => {
-    console.log("Server is listening on port 3000")
-})
+main()
