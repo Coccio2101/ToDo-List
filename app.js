@@ -62,6 +62,7 @@ async function main () {
     // doing operation with it
     await databaseConnection()
 
+    // GET REQUESTES
     app.get("/", async function(req, res) {
         /* const day = date.getDate() */
 
@@ -80,7 +81,12 @@ async function main () {
     app.get("/work", (req, res) => {
         res.render("list", {listTipe: "Work", newListItem: itemWork})
     })
+
+    app.get("/about", (req, res) => {
+        res.render("about")
+    })
     
+    // POST REQUESTES
     app.post("/", (req, res) => {
         
         const itemName = req.body.newItem
@@ -94,10 +100,13 @@ async function main () {
         res.redirect("/")
     })
     
-    app.get("/about", (req, res) => {
-        res.render("about")
+    app.post("/delete", async function(req, res){
+        const checkedItemId = req.body.checkbox
+        await Item.findByIdAndRemove(checkedItemId)
+        res.redirect("/")
     })
     
+    // APP LISTEN
     app.listen(3000, () => {
         console.log("Server is listening on port 3000")
     })

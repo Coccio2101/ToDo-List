@@ -7,12 +7,14 @@
     <div class="box">
         <!-- items -->
         <% newListItem.forEach((record) => { %>
-            <div class="item">
-                <input type="checkbox" />
-                <p><%= record.name %></p>
-            </div>
+            <form action="/delete" method="post">
+                <div class="item">
+                    <input type="checkbox" name="checkbox" value="<%= record._id %>" onchange="this.form.submit()"/>
+                    <p><%= record.name %></p>
+                </div>
+            </form>
         <% }) %>
-        
+
         <!-- Form -->
         <form class="item" action="/" method="post">
             <input type="text" name="newItem" autofocus placeholder="New Item" autocomplete="off"/>
