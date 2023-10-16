@@ -2,9 +2,7 @@
     <!-- Heading -->
     <div class="box" id="heading">
         <h1><%= listTipe %></h1>
-    </div>
     
-    <div class="box">
         <!-- items -->
         <% newListItem.forEach((record) => { %>
             <form action="/delete" method="post">
@@ -19,8 +17,8 @@
 
         <!-- Form -->
         <form class="item" action="/" method="post">
-            <input type="text" name="newItem" autofocus placeholder="New Item" autocomplete="off"/>
-            <button type="submit" name="list" value="<%= listTipe %>">+</button>
+            <input type="text" name="newItem" placeholder="New Item" autocomplete="off"/>
+            <button type="submit" name="list" value="<%= listTipe %>">Add item</button>
         </form>
     </div>
 <%- include("footer") -%>

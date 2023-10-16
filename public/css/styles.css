@@ -1,96 +1,61 @@
-html {
-  background-color: #E4E9FD;
-  background-image: -webkit-linear-gradient(65deg, #A683E3 50%, #E4E9FD 50%);
-  min-height: 1000px;
-  font-family: 'helvetica neue';
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&family=Roboto&display=swap');
 
-h1 {
-  color: #fff;
-  padding: 10px;
+
+body {
+	color: #93B1A6;
+	background-color: #000;
+	font-family: 'Roboto', sans-serif;
 }
 
 .box {
-  max-width: 400px;
-  margin: 50px auto;
-  background: white;
-  border-radius: 5px;
-  box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
+	max-width: 700px;
+  	margin: 50px auto;
+	background-color: #183D3D;
+	padding: 20px;
+	border-radius: 20px;
 }
 
-#heading {
-  background-color: #A683E3;
-  text-align: center;
-}
-
-.item {
-  min-height: 70px;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid #F1F1F1;
-}
-
-.item:last-child {
-  border-bottom: 0;
-}
-
-input:checked+p {
-  text-decoration: line-through;
-  text-decoration-color: #A683E3;
-}
-
-input[type="checkbox"] {
-  margin: 20px;
+h1 {
+	text-align: center;
 }
 
 p {
-  margin: 0;
-  padding: 20px;
-  font-size: 20px;
-  font-weight: 200;
-  color: #00204a;
+	display: inline;
 }
 
-form.item {
-  text-align: center;
-  margin-left: 20px;
-}
-
-button {
-  min-height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  border-color: transparent;
-  background-color: #A683E3;
-  color: #fff;
-  font-size: 30px;
-  padding-bottom: 6px;
-  border-width: 0;
-}
-
-input[type="text"] {
-  text-align: center;
-  height: 60px;
-  top: 10px;
-  border: none;
-  background: transparent;
-  font-size: 20px;
-  font-weight: 200;
-  width: 313px;
-}
-
-input[type="text"]:focus {
-  outline: none;
-  box-shadow: inset 0 -3px 0 0 #A683E3;
-}
-
-::placeholder {
-  color: grey;
-  opacity: 1;
+.item {
+	margin: 20px 0;
+	margin-left: 10px;
+	background-color: #040D12;
+	padding: 10px;
+	border-radius: 10px;
 }
 
 footer {
-  color: white;
-  color: rgba(0, 0, 0, 0.5);
-  text-align: center;
+	text-align: center;
 }
+
+button {
+	background-color: #183D3D;
+	border: none;
+	color: #93B1A6;
+}
+
+.item:last-child {
+	background-color: #183D3D;
+}
+
+form.item input {
+	background-color: #183D3D;
+	border: solid 2px #040D12;
+	border-radius: 10px;
+	width: 85%;
+	height: 15px;
+	padding: 10px;
+}
+
+form.item input::placeholder {
+	font-family: 'Roboto', sans-serif;
+}
+
+
