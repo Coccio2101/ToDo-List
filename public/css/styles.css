@@ -35,7 +35,7 @@ footer {
 	text-align: center;
 }
 
-button {
+.submitButton {
 	background-color: #183D3D;
 	border: none;
 	color: #93B1A6;
@@ -58,4 +58,14 @@ form.item input::placeholder {
 	font-family: 'Roboto', sans-serif;
 }
 
+div.item {
+	display: flex;
+	justify-content: space-between;
+	padding: 0 10px;
+}
 
+.deleteButton {
+	border: none;
+	background-color: #040D12;
+	color: red;
+}
